@@ -26,7 +26,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class CastingList(generics.ListCreateAPIView):
     queryset = Casting.objects.all()
     serializer_class = CastingSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -34,34 +34,34 @@ class CastingList(generics.ListCreateAPIView):
 class CastingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Casting.objects.all().order_by('id')
     serializer_class = CastingSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
 
 class CharacterList(generics.ListCreateAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 class CharacterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character.objects.all().order_by('id')
     serializer_class = CharacterSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
     
 
 
 class CastingVoteList(generics.ListCreateAPIView):
     queryset = Casting_Vote.objects.all()
     serializer_class = CastingVoteSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
 class CastingVoteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Casting_Vote.objects.all().order_by('id')
     serializer_class = CastingVoteSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
 
 class CharacterVoteList(generics.ListCreateAPIView):
     queryset = Character_Vote.objects.all()
     serializer_class = CharacterVoteSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 class CharacterVoteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character_Vote.objects.all().order_by('id')
     serializer_class = CharacterVoteSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
