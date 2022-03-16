@@ -36,13 +36,14 @@ ALLOWED_HOSTS = ['localhost', 'bookcast-server.herokuapp.com']
 INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
-    'cast_api',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cast_api',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://localhost:3001']
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 
