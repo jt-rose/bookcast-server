@@ -6,33 +6,33 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     
-# class BookCast(models.Model):
-#     user_id = models.IntegerField()
-# #   cast_id: Int # PK
-#     book_id = models.CharField(max_length=255) ## link to google-books-api
-#     book_name = models.CharField(max_length=255)
-#     book_image_url = models.CharField(max_length=255)
-#     description = models.TextField()
+class Casting(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+#    book_id = models.CharField(max_length=255) ## link to google-books-api
+    book_name = models.CharField(max_length=255)
+    book_image_url = models.CharField(max_length=255)
+    description = models.TextField()
 
-# class Character(models.Model):
-#     cast_id = models.IntegerField()
-#     character_id = models.IntegerField()
-#     name = models.CharField(max_length=255)
-#     actor = models.CharField(max_length=255)
-#     description = models.TextField()
-#     photo_url = models.CharField(max_length=255)
+class Character(models.Model):
+    casting = models.ForeignKey(Casting, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    actor = models.CharField(max_length=255)
+    description = models.TextField()
+    photo_url = models.CharField(max_length=255, null=True)
     
-# class BookCast_Like(models.Model):
-#     user_id = models.IntegerField()
-#     cast_id = models.IntegerField()
-#     like = models.BooleanField()
-#     comment = models.TextField()
+class Casting_Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    casting = models.ForeignKey(Casting, on_delete=models.CASCADE)
+    like = models.NullBooleanField(null=True)
+    comment = models.TextField(null=True)
 
-# class Character_Like(models.Model):
-#     user_id = models.IntegerField()
-#     character_id = models.IntegerField()
-#     like = models.BooleanField()
-#     comment = models.TextField()
+class Character_Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    like = models.BooleanField(null=True)
+    comment = models.TextField(null=True)
+    
+    # sample of data with full joins, GraphQL-style
     
     # user {
     #     username
