@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-!s9jq#m7d7fim8m_%7s*p4*k7&139tgrjfzt_&)v__(7fhvwf1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'bookcast-server.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
 
 # Application definition
