@@ -57,20 +57,22 @@ class CharacterSerializer(serializers.ModelSerializer):
         model = Character
         fields = ['casting', 'id', 'name', 'actor', 'description', 'photo_url']
 
-class CastingSerializer(serializers.ModelSerializer):
-    creator = UserSerializer(read_only=True)
-    characters = CharacterSerializer(many=True, read_only=True)
-    class Meta:
-        model = Casting
-        fields = ['created', 'id', 'creator', 'characters', 'source_name', 'source_image_url', 'description']
-    def create(self, validated_data):
-        print(validated_data)
-        return Casting.objects.create(**validated_data)
 class CastingVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Casting_Vote
         fields = ['user', 'casting', 'id', 'like', 'comment']
         
+class CastingSerializer(serializers.ModelSerializer):
+    creator = UserSerializer(read_only=True)
+    characters = CharacterSerializer(many=True, read_only=True)
+    votes_and_comments = CastingVoteSerializer(many=True, read_only=True)
+    class Meta:
+        model = Casting
+        fields = ['created', 'id', 'creator', 'characters', 'votes_and_comments', 'source_name', 'source_image_url', 'description']
+    def create(self, validated_data):
+        print(validated_data)
+        return Casting.objects.create(**validated_data)
+
 class CharacterVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character_Vote
