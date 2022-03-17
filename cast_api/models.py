@@ -18,7 +18,7 @@ class Casting(models.Model):
         ordering = ['created']
 
 class Character(models.Model):
-    casting = models.ForeignKey(Casting, on_delete=models.CASCADE)
+    casting = models.ForeignKey(Casting, related_name='characters', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     actor = models.CharField(max_length=255)
     description = models.TextField()
