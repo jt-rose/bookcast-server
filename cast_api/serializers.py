@@ -51,7 +51,7 @@ class LoginSerializer(serializers.Serializer):
     raise serializers.ValidationError("Incorrect Credentials")
 
 class CastingSerializer(serializers.ModelSerializer):
-    creator = serializers.ReadOnlyField(source='user')
+    creator = UserSerializer(read_only=True)
     class Meta:
         model = Casting
         fields = ['created', 'id', 'creator', 'source_name', 'source_image_url', 'description']
