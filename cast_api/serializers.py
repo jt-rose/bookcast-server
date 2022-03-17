@@ -50,12 +50,16 @@ class LoginSerializer(serializers.Serializer):
       return user
     raise serializers.ValidationError("Incorrect Credentials")
 
-
+class CharacterVoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Character_Vote
+        fields = ['user', 'character', 'id', 'like', 'comment']
 
 class CharacterSerializer(serializers.ModelSerializer):
+    votes_and_comments = CharacterVoteSerializer(many=True, read_only=True)
     class Meta:
         model = Character
-        fields = ['casting', 'id', 'name', 'actor', 'description', 'photo_url']
+        fields = ['casting', 'id', 'name', 'votes_and_comments', 'actor', 'description', 'photo_url']
 
 class CastingVoteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,7 +77,3 @@ class CastingSerializer(serializers.ModelSerializer):
         print(validated_data)
         return Casting.objects.create(**validated_data)
 
-class CharacterVoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Character_Vote
-        fields = ['user', 'character', 'id', 'like', 'comment']
