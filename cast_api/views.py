@@ -3,7 +3,7 @@
 # Create your views here.
 from cast_api.permissions import IsCreatorOrReadOnly
 from rest_framework import generics
-from .serializers import UserSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 from .serializers import CastingSerializer
 from .serializers import CharacterSerializer
 from .serializers import CastingVoteSerializer
@@ -14,7 +14,50 @@ from .models import Character
 from .models import Casting_Vote
 from .models import Character_Vote
 from rest_framework import permissions
+from rest_framework.response import Response
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.utils.decorators import method_decorator
 
+from knox.models import AuthToken
+
+# Register API
+class RegisterAPI(generics.GenericAPIView):
+  serializer_class = RegisterSerializer
+
+  def post(self, request, *args, **kwargs):
+    serializer = self.get_serializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    return Response({
+      "user": UserSerializer(user, context=self.get_serializer_context()).data,
+      "token": AuthToken.objects.create(user)[1]
+    })
+
+# Login API
+class LoginAPI(generics.GenericAPIView):
+  serializer_class = LoginSerializer
+
+  def post(self, request, *args, **kwargs):
+    serializer = self.get_serializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data
+    _, token = AuthToken.objects.create(user)
+    return Response({
+      "user": UserSerializer(user, context=self.get_serializer_context()).data,
+      "token": token
+    })
+
+# Get User API
+class UserAPI(generics.RetrieveAPIView):
+  permission_classes = [
+    permissions.IsAuthenticated,
+  ]
+  serializer_class = UserSerializer
+
+  def get_object(self):
+    return self.request.user
+
+#@method_decorator(csrf_protect, name='dispatch')
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
