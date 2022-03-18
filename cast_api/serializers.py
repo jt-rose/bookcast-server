@@ -73,7 +73,7 @@ class CharacterSerializer(serializers.ModelSerializer):
         fields = ['casting', 'id', 'name', 'votes', 'comments', 'actor', 'description', 'photo_url']
 
 class CastingVoteSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField(source='user', queryset=User.objects.all())#UserSerializer(many=False, read_only=True)
+    user = UserSerializer(many=False, read_only=True)
     class Meta:
         model = Casting_Vote
         fields = ['user', 'casting', 'id', 'like']
