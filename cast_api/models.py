@@ -30,7 +30,7 @@ class Casting_Vote(models.Model):
     like = models.BooleanField()
     
 class Casting_Comment(models.Model):
-    user = models.ForeignKey('auth.user', related_name="casting_votes", on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.user', related_name="casting_comments", on_delete=models.CASCADE)
     casting = models.ForeignKey(Casting, related_name="comments", on_delete=models.CASCADE)
     comment = models.TextField()
 
@@ -40,7 +40,7 @@ class Character_Vote(models.Model):
     like = models.BooleanField()
     
 class Character_Comment(models.Model):
-    user = models.ForeignKey('auth.user', related_name="character_votes", on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.user', related_name="character_comments", on_delete=models.CASCADE)
     character = models.ForeignKey(Character, related_name="comments", on_delete=models.CASCADE)
     comment = models.TextField()
     
