@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Casting
+from .models import Casting, Casting_Comment, Character_Comment
 from .models import Character
 from .models import Casting_Vote
 from .models import Character_Vote
@@ -12,3 +12,5 @@ admin.site.register(Casting)
 admin.site.register(Character)
 admin.site.register(Casting_Vote)
 admin.site.register(Character_Vote)
+admin.site.register(Casting_Comment)
+admin.site.register(Character_Comment)
