@@ -3,13 +3,13 @@
 # Create your views here.
 from cast_api.permissions import IsCreatorOrReadOnly
 from rest_framework import generics
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import CastingCommentSerializer, CharacterCommentSerializer, UserSerializer, RegisterSerializer, LoginSerializer
 from .serializers import CastingSerializer
 from .serializers import CharacterSerializer
 from .serializers import CastingVoteSerializer
 from .serializers import CharacterVoteSerializer
 from django.contrib.auth.models import User
-from .models import Casting
+from .models import Casting, Casting_Comment, Character_Comment
 from .models import Character
 from .models import Casting_Vote
 from .models import Character_Vote
@@ -107,4 +107,25 @@ class CharacterVoteList(generics.ListCreateAPIView):
 class CharacterVoteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character_Vote.objects.all().order_by('id')
     serializer_class = CharacterVoteSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
+    
+# comments
+
+class CastingCommentList(generics.ListCreateAPIView):
+    queryset = Casting_Comment.objects.all()
+    serializer_class = CastingCommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
+class CastingCommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Casting_Comment.objects.all().order_by('id')
+    serializer_class = CastingCommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]
+
+class CharacterCommentList(generics.ListCreateAPIView):
+    queryset = Character_Comment.objects.all()
+    serializer_class = CharacterCommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class CharacterCommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Character_Comment.objects.all().order_by('id')
+    serializer_class = CharacterCommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]

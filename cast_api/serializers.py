@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from .models import Casting
+from .models import Casting, Casting_Comment, Character_Comment
 from .models import Character
 from .models import Casting_Vote
 from .models import Character_Vote
@@ -54,27 +54,41 @@ class CharacterVoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
     class Meta:
         model = Character_Vote
-        fields = ['user', 'character', 'id', 'like', 'comment']
+        fields = ['user', 'character', 'id', 'like']
+        
+class CharacterCommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False, read_only=True)
+    class Meta:
+        model = Character_Comment
+        fields = ['user', 'character', 'id', 'comment']
 
 class CharacterSerializer(serializers.ModelSerializer):
-    votes_and_comments = CharacterVoteSerializer(many=True, read_only=True)
+    votes = CharacterVoteSerializer(many=True, read_only=True)
+    comments = CharacterCommentSerializer(many=True, read_only=True)
     class Meta:
         model = Character
-        fields = ['casting', 'id', 'name', 'votes_and_comments', 'actor', 'description', 'photo_url']
+        fields = ['casting', 'id', 'name', 'votes', 'comments', 'actor', 'description', 'photo_url']
 
 class CastingVoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
     class Meta:
         model = Casting_Vote
-        fields = ['user', 'casting', 'id', 'like', 'comment']
-        
+        fields = ['user', 'casting', 'id', 'like']
+
+class CastingCommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False, read_only=True)
+    class Meta:
+        model = Casting_Comment
+        fields = ['user', 'casting', 'id', 'comment']
+
 class CastingSerializer(serializers.ModelSerializer):
     creator = UserSerializer(read_only=True)
     characters = CharacterSerializer(many=True, read_only=True)
-    votes_and_comments = CastingVoteSerializer(many=True, read_only=True)
+    votes = CastingVoteSerializer(many=True, read_only=True)
+    comments = CastingCommentSerializer(many=True, read_only=True)
     class Meta:
         model = Casting
-        fields = ['created', 'id', 'creator', 'characters', 'votes_and_comments', 'source_name', 'source_image_url', 'description']
+        fields = ['created', 'id', 'creator', 'characters', 'votes', 'comments','source_name', 'source_image_url', 'description']
     def create(self, validated_data):
         print(validated_data)
         return Casting.objects.create(**validated_data)

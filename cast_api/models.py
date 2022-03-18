@@ -26,15 +26,23 @@ class Character(models.Model):
     
 class Casting_Vote(models.Model):
     user = models.ForeignKey('auth.user', related_name="casting_votes", on_delete=models.CASCADE)
-    casting = models.ForeignKey(Casting, related_name="votes_and_comments", on_delete=models.CASCADE)
-    like = models.BooleanField(null=True)
-    comment = models.TextField(null=True)
+    casting = models.ForeignKey(Casting, related_name="votes", on_delete=models.CASCADE)
+    like = models.BooleanField()
+    
+class Casting_Comment(models.Model):
+    user = models.ForeignKey('auth.user', related_name="casting_votes", on_delete=models.CASCADE)
+    casting = models.ForeignKey(Casting, related_name="comments", on_delete=models.CASCADE)
+    comment = models.TextField()
 
 class Character_Vote(models.Model):
     user = models.ForeignKey('auth.user', related_name="character_votes", on_delete=models.CASCADE)
-    character = models.ForeignKey(Character, related_name="votes_and_comments", on_delete=models.CASCADE)
-    like = models.BooleanField(null=True)
-    comment = models.TextField(null=True)
+    character = models.ForeignKey(Character, related_name="votes", on_delete=models.CASCADE)
+    like = models.BooleanField()
+    
+class Character_Comment(models.Model):
+    user = models.ForeignKey('auth.user', related_name="character_votes", on_delete=models.CASCADE)
+    character = models.ForeignKey(Character, related_name="comments", on_delete=models.CASCADE)
+    comment = models.TextField()
     
     # sample of data with full joins, GraphQL-style
     

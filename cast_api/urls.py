@@ -17,5 +17,9 @@ urlpatterns = [
     path('api/castingvotes/', views.CastingVoteList.as_view()),
     path('api/castingvotes/<int:pk>/', views.CastingVoteDetail.as_view()),
     path('api/charactervotes/', views.CharacterVoteList.as_view()),
-    path('api/charactervotes/<int:pk>/', views.CharacterVoteDetail.as_view())
+    path('api/charactervotes/<int:pk>/', views.CharacterVoteDetail.as_view()),
+    path('api/castingcomments/', views.CastingCommentList.as_view()),
+    path('api/castingcomments/<int:pk>/', views.CastingCommentDetail.as_view()),
+    path('api/charactercomments/', views.CharacterCommentList.as_view()),
+    path('api/charactercomments/<int:pk>/', views.CharacterCommentDetail.as_view())
 ]
