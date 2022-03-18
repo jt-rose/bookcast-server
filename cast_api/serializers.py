@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer): # serializers.ModelSerializer just tells django to convert sql to JSON
     castings = serializers.PrimaryKeyRelatedField(many=True, queryset=Casting.objects.all())
     creator = serializers.ReadOnlyField(source='creator.username')
+    user = serializers.ReadOnlyField(source='user.username')
     casting_votes = serializers.PrimaryKeyRelatedField(many=True, queryset=Casting_Vote.objects.all())
     character_votes = serializers.PrimaryKeyRelatedField(many=True, queryset=Character_Vote.objects.all())
     casting_comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Casting_Comment.objects.all())
@@ -72,7 +73,7 @@ class CharacterSerializer(serializers.ModelSerializer):
         fields = ['casting', 'id', 'name', 'votes', 'comments', 'actor', 'description', 'photo_url']
 
 class CastingVoteSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False, read_only=True)
+    user = serializers.RelatedField(source='user', queryset=User.objects.all())#UserSerializer(many=False, read_only=True)
     class Meta:
         model = Casting_Vote
         fields = ['user', 'casting', 'id', 'like']
