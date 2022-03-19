@@ -10,15 +10,15 @@ from django.contrib.auth import authenticate
 
 class UserSerializer(serializers.ModelSerializer): # serializers.ModelSerializer just tells django to convert sql to JSON
     castings = serializers.PrimaryKeyRelatedField(many=True, queryset=Casting.objects.all())
-    creator = serializers.ReadOnlyField(source='creator.username')
-    user = serializers.ReadOnlyField(source='user.username')
+    #creator = serializers.ReadOnlyField(source='creator.username')
+    #user = serializers.ReadOnlyField(source='user.username')
     casting_votes = serializers.PrimaryKeyRelatedField(many=True, queryset=Casting_Vote.objects.all())
     character_votes = serializers.PrimaryKeyRelatedField(many=True, queryset=Character_Vote.objects.all())
     casting_comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Casting_Comment.objects.all())
     character_comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Character_Comment.objects.all())
     class Meta:
         model = User # tell django which model to use
-        fields = ['id', 'user','username', 'email', 'password', 'creator', 'castings', 'casting_votes', 'character_votes', 'casting_comments', 'character_comments'] # hide password
+        fields = ['id', 'username', 'email', 'password', 'castings', 'casting_votes', 'character_votes', 'casting_comments', 'character_comments'] # hide password
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
