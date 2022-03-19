@@ -95,8 +95,6 @@ class CastingVoteList(generics.ListCreateAPIView):
     serializer_class = CastingVoteSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def perform_create(self, serializer):
-        print('self: ',self)
-        print('req: ',self.request)
         serializer.save(user=self.request.user)
     
 class CastingVoteDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -109,6 +107,8 @@ class CharacterVoteList(generics.ListCreateAPIView):
     queryset = Character_Vote.objects.all()
     serializer_class = CharacterVoteSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 class CharacterVoteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character_Vote.objects.all().order_by('id')
     serializer_class = CharacterVoteSerializer
