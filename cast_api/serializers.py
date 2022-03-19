@@ -77,6 +77,14 @@ class CastingVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Casting_Vote
         fields = ['user', 'casting', 'id', 'like']
+    def create(self, request, validated_data):
+        vote = Casting_Vote(
+            casting=validated_data['casting'],
+            like=validated_data['like'],
+            user=request.user
+        )
+        vote.save()
+        return vote
 
 class CastingCommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
