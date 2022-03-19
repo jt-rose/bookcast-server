@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer): # serializers.ModelSerializer
     character_comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Character_Comment.objects.all())
     class Meta:
         model = User # tell django which model to use
-        fields = ['id', 'username', 'email', 'password', 'creator', 'castings', 'casting_votes', 'character_votes', 'casting_comments', 'character_comments'] # hide password
+        fields = ['id', 'user','username', 'email', 'password', 'creator', 'castings', 'casting_votes', 'character_votes', 'casting_comments', 'character_comments'] # hide password
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
