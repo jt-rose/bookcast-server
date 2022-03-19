@@ -120,6 +120,8 @@ class CastingCommentList(generics.ListCreateAPIView):
     queryset = Casting_Comment.objects.all()
     serializer_class = CastingCommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     
 class CastingCommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Casting_Comment.objects.all().order_by('id')
@@ -130,6 +132,8 @@ class CharacterCommentList(generics.ListCreateAPIView):
     queryset = Character_Comment.objects.all()
     serializer_class = CharacterCommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 class CharacterCommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Character_Comment.objects.all().order_by('id')
     serializer_class = CharacterCommentSerializer
