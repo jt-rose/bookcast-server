@@ -84,7 +84,7 @@ class MyCastingList(generics.ListAPIView):
         for the currently authenticated user.
         """
         user = self.request.user
-        return Casting.objects.filter(creator=user)
+        return Casting.objects.filter(creator=user.id)
     
 class CastingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Casting.objects.all().order_by('id')
