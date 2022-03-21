@@ -73,6 +73,18 @@ class CastingList(generics.ListCreateAPIView):
     
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+class MyCastingList(generics.ListAPIView):
+    serializer_class = CastingSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Casting.objects.filter(creator=user)
     
 class CastingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Casting.objects.all().order_by('id')

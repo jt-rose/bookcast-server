@@ -10,6 +10,7 @@ urlpatterns = [
   path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('api/users/', views.UserList.as_view(), name='user_list'), # api/contacts will be routed to the ContactList view for handling
     path('api/users/<int:pk>', views.UserDetail.as_view(), name='user_detail'), # api/contacts will be routed to the ContactDetail view for handling
+    path('api/mycastings/', views.MyCastingList.as_view()),
     path('api/castings/', views.CastingList.as_view()),
     path('api/castings/<int:pk>/', views.CastingDetail.as_view()),
     path('api/characters/', views.CharacterList.as_view()),
