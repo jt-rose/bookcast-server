@@ -14,6 +14,8 @@ from pathlib import Path
 import dj_database_url 
 import os # add this
 
+os.environ.get('SECRET_KEY')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
